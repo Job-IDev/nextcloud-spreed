@@ -21,3 +21,20 @@ signaling:
     blockKey: "1234567890123456" # Must be exactly 16, 24, or 32 bytes
     coturnServer: "turn.example.com"
     coturnSecret: "your-coturn-secret"
+
+ingress:
+  enabled: true
+  className: "nginx" # Change this if you use traefik, haproxy, etc.
+  annotations: {}
+    # Example for cert-manager:
+    # cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    # nginx.ingress.kubernetes.io/proxy-body-size: "50m"
+  hosts:
+    - host: signaling.yourdomain.com
+      paths:
+        - path: /
+          pathType: Prefix
+  tls: []
+  #  - secretName: signaling-tls
+  #    hosts:
+  #      - signaling.yourdomain.com
