@@ -15,8 +15,7 @@ spec:
       containers:
         - name: signaling
           image: {{ .Values.signaling.image }}
-          command: ["/usr/bin/signaling"]
-          args: ["--config=/config/server.conf"]
+          # The image's native ENTRYPOINT will handle startup automatically.
           ports:
             - containerPort: {{ .Values.signaling.port }}
           volumeMounts:
