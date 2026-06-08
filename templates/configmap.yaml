@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-signaling-config
+data:
+  server.conf: |
+    [server]
+    listen = 0.0.0.0:8080
+
+    [app]
+    url = {{ .Values.signaling.config.nextcloudUrl }}
+    secret = {{ .Values.signaling.config.nextcloudSecret }}
+
+    [sessions]
+    hashkey = {{ .Values.signaling.config.hashKey }}
+    blockkey = {{ .Values.signaling.config.blockKey }}
+
+    [clients]
+    pingspongetimeout = 37s
+
+    [nats]
+    url = nats://{{ .Release.Name }}-nats:{{ .Values.nats.port }}
+
+    [mcu]
+    type = janus
+    url = ws://{{ .Release.Name }}-janus:{{ .Values.janus.ports.ws }}
+
+    [turn]
+    apikey = {{ .Values.signaling.config.coturnSecret }}
+    secret = {{ .Values.signaling.config.coturnSecret }}
+    servers = turn:{{ .Values.signaling.config.coturnServer }}:3478?transport=udp,turn:{{ .Values.signaling.config.coturnServer }}:3478?transport=tcp
