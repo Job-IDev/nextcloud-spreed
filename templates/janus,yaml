@@ -14,10 +14,16 @@ spec:
     spec:
       {{- if .Values.janus.hostNetwork }}
       hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet
       {{- end }}
       containers:
         - name: janus
           image: {{ .Values.janus.image }}
+          # Pass the public IP to Janus so it can route WebRTC traffic
+          {{- if .Values.janus.publicIp }}
+          command: ["/usr/local/bin/janus"]
+          args: ["--nat-1-1={{ .Values.janus.publicIp }}"]
+          {{- end }}
           ports:
             - containerPort: {{ .Values.janus.ports.ws }}
             - containerPort: {{ .Values.janus.ports.http }}
