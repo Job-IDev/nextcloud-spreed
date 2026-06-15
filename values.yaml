@@ -3,7 +3,7 @@ nats:
   port: 4222
 
 janus:
-  image: "mcroth/docker-janus:latest"
+  image: "canyan/janus-gateway:latest"
   ports:
     ws: 8188
     http: 8088
