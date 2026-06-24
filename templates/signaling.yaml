@@ -15,7 +15,7 @@ spec:
       labels:
         app: {{ .Release.Name }}-signaling
     spec:
-      containers:
+containers:
         - name: signaling
           image: "{{ .Values.signaling.image }}"
           imagePullPolicy: {{ .Values.signaling.pullPolicy }}
@@ -26,12 +26,7 @@ spec:
           volumeMounts:
             - name: config-volume
               mountPath: /config
-          command: ["/usr/bin/signaling"]
           args: ["--config", "/config/server.conf"]
-      volumes:
-        - name: config-volume
-          configMap:
-            name: {{ .Release.Name }}-config
 ---
 apiVersion: v1
 kind: Service
