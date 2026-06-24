@@ -1,39 +1,51 @@
+{{- if .Values.signaling.enabled -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ .Release.Name }}-signaling
+  labels:
+    app: {{ .Release.Name }}-signaling
 spec:
-  replicas: 1
+  replicas: {{ .Values.signaling.replicaCount }}
   selector:
     matchLabels:
-      app: signaling
+      app: {{ .Release.Name }}-signaling
   template:
     metadata:
       labels:
-        app: signaling
+        app: {{ .Release.Name }}-signaling
     spec:
       containers:
         - name: signaling
-          image: {{ .Values.signaling.image }}
-          # The image's native ENTRYPOINT will handle startup automatically.
+          image: "{{ .Values.signaling.image }}"
+          imagePullPolicy: {{ .Values.signaling.pullPolicy }}
           ports:
-            - containerPort: {{ .Values.signaling.port }}
+            - name: http
+              containerPort: 8080
+              protocol: TCP
           volumeMounts:
             - name: config-volume
               mountPath: /config
+          command: ["/usr/bin/signaling"]
+          args: ["--config", "/config/server.conf"]
       volumes:
         - name: config-volume
           configMap:
-            name: {{ .Release.Name }}-signaling-config
+            name: {{ .Release.Name }}-config
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: {{ .Release.Name }}-signaling
+  labels:
+    app: {{ .Release.Name }}-signaling
 spec:
-  selector:
-    app: signaling
+  type: {{ .Values.signaling.service.type }}
   ports:
-    - protocol: TCP
-      port: 80
-      targetPort: {{ .Values.signaling.port }}
+    - port: {{ .Values.signaling.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app: {{ .Release.Name }}-signaling
+{{- end -}}
