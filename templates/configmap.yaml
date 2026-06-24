@@ -13,6 +13,24 @@ data:
     [appinfo]
     id = spreed
 
+    # ----------------------------------------------------
+    # 1. YOUR EXISTING CONFIG (Keep your original values here)
+    # ----------------------------------------------------
+    [backend]
+    # The URL to your Nextcloud instance
+    backends = {{ .Values.signaling.backend.url }}
+    # The shared secret configured in your Nextcloud Talk settings
+    secret = {{ .Values.signaling.backend.secret }}
+    allowall = false
+
+    [sessions]
+    # Session secrets
+    hashkey = {{ .Values.signaling.sessions.hashkey }}
+    blockkey = {{ .Values.signaling.sessions.blockkey }}
+
+    # ----------------------------------------------------
+    # 2. THE NEW EXTERNAL VM CONFIG (Added for your setup)
+    # ----------------------------------------------------
     [mcu]
     type = {{ .Values.signaling.mcu.type }}
     url = {{ .Values.signaling.mcu.url }}

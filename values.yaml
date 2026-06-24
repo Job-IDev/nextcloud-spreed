@@ -12,7 +12,7 @@ signaling:
     type: ClusterIP
     port: 8080
 
-  # Settings to connect the signaling server to external components
+  # 1. External Media & TURN Settings (Azure VM)
   mcu:
     type: janus
     # Use ws:// because you are testing without SSL on the VM
@@ -22,6 +22,18 @@ signaling:
     server: "turn:YOUR_VM_PUBLIC_IP:3478"
     secret: "super-secret-turn-key-123"
     protocols: "udp,tcp"
+
+  # 2. Your Existing Nextcloud Connection Settings
+  backend:
+    url: "https://nextcloud.yourdomain.com"
+    secret: "your-nextcloud-shared-secret"
+    
+  # 3. Your Existing Session Keys
+  sessions:
+    # Hashkey must be 32 or 64 bytes
+    hashkey: "your-session-hash-key-here"
+    # Blockkey must be exactly 16, 24, or 32 bytes
+    blockkey: "your-session-block-key-here"
 
 # ---------------------------------------------------------
 # JANUS WEBRTC GATEWAY
