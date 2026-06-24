@@ -15,7 +15,7 @@ spec:
       labels:
         app: {{ .Release.Name }}-signaling
     spec:
-containers:
+      containers:
         - name: signaling
           image: "{{ .Values.signaling.image }}"
           imagePullPolicy: {{ .Values.signaling.pullPolicy }}
