@@ -15,8 +15,7 @@ signaling:
   # 1. External Media & TURN Settings (Azure VM)
   mcu:
     type: janus
-    # Use ws:// because you are testing without SSL on the VM
-    url: "ws://YOUR_VM_PUBLIC_IP:8188"
+    url: "YOUR_VM_PUBLIC_IP:8188"
   
   turn:
     server: "turn:YOUR_VM_PUBLIC_IP:3478"
