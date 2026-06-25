@@ -20,7 +20,7 @@ data:
     connectionsperhost = 8
 
     [backend-1]
-    backends = {{ .Values.signaling.backend.url }}
+    url = {{ .Values.signaling.backend.url }}
     secret = {{ .Values.signaling.backend.secret }}
 
     [sessions]
