@@ -13,9 +13,6 @@ data:
     [appinfo]
     id = spreed
 
-    # ----------------------------------------------------
-    # 1. YOUR EXISTING CONFIG (Keep your original values here)
-    # ----------------------------------------------------
     [backend]
     backends = backend-1
     allowall = false
@@ -23,9 +20,7 @@ data:
     connectionsperhost = 8
 
     [backend-1]
-    # The URL to your Nextcloud instance
     backends = {{ .Values.signaling.backend.url }}
-    # The shared secret configured in your Nextcloud Talk settings
     secret = {{ .Values.signaling.backend.secret }}
 
     [sessions]
@@ -33,9 +28,6 @@ data:
     hashkey = {{ .Values.signaling.sessions.hashkey }}
     blockkey = {{ .Values.signaling.sessions.blockkey }}
 
-    # ----------------------------------------------------
-    # 2. THE NEW EXTERNAL VM CONFIG (Added for your setup)
-    # ----------------------------------------------------
     [mcu]
     type = {{ .Values.signaling.mcu.type }}
     url = ws://{{ .Values.signaling.mcu.url }}
@@ -43,8 +35,7 @@ data:
     [turn]
     apikey = {{ .Values.signaling.turn.secret }}
     secret = {{ .Values.signaling.turn.secret }}
-    servers = {{ .Values.signaling.turn.server }}
-    protocols = {{ .Values.signaling.turn.protocols }}
+    servers = turn:{{ .Values.signaling.turn.server }}:3478?transport=udp,turn:{{ .Values.signaling.turn.server }}:3478?transport=tcp
 
     [nats]
     url = nats://{{ .Release.Name }}-nats:4222

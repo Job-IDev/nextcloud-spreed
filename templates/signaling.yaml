@@ -37,8 +37,8 @@ metadata:
 spec:
   type: {{ .Values.signaling.service.type }}
   ports:
-    - port: {{ .Values.signaling.service.port }}
-      targetPort: http
+    - port: 80
+      targetPort: {{ .Values.signaling.service.port }}
       protocol: TCP
       name: http
   selector:

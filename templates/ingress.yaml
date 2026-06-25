@@ -35,7 +35,7 @@ spec:
               service:
                 name: {{ $.Release.Name }}-signaling
                 port:
-                  number: {{ $.Values.signaling.service.port }}
+                  number: 80
           {{- end }}
     {{- end }}
 {{- end }}

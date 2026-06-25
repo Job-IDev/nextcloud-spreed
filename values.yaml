@@ -18,9 +18,8 @@ signaling:
     url: "YOUR_VM_PUBLIC_IP:8188"
   
   turn:
-    server: "turn:YOUR_VM_PUBLIC_IP:3478"
+    server: "YOUR_VM_PUBLIC_IP"
     secret: "super-secret-turn-key-123"
-    protocols: "udp,tcp"
 
   # 2. Your Existing Nextcloud Connection Settings
   backend:
