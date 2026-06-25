@@ -61,3 +61,20 @@ nats:
   service:
     type: ClusterIP
     port: 4222
+
+ingress:
+  enabled: true
+  className: "nginx" # Change this if you use traefik, haproxy, etc.
+  annotations: {}
+    # Example for cert-manager:
+    # cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    # nginx.ingress.kubernetes.io/proxy-body-size: "50m"
+  hosts:
+    - host: signaling.yourdomain.com
+      paths:
+        - path: /
+          pathType: Prefix
+  tls: []
+  #  - secretName: signaling-tls
+  #    hosts:
+  #      - signaling.yourdomain.com
